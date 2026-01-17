@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Slider;
+use App\Models\Title;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -27,7 +28,7 @@ class SliderController extends Controller
             $name_gen = hexdec(uniqid()) . '.' .
                 $image->getClientOriginalExtension();
             $img = $manager->read($image->getRealPath());
-            $img->resize(306,618)->save(public_path('upload/slider/' . $name_gen));
+            $img->resize(306, 618)->save(public_path('upload/slider/' . $name_gen));
             $save_url = 'upload/slider/' . $name_gen;
 
             if (file_exists(public_path($slider->image))) {
@@ -60,7 +61,33 @@ class SliderController extends Controller
             );
 
             return redirect()->route('get.slider')->with($notification);
-        } 
+        }
+    }
+
+    public function EditSlider(Request $request, $id)
+    {
+        $slider = Slider::findorFail($id);
+
+        if ($request->has('title')) {
+            $slider->title = $request->title;
+        }
+        if ($request->has('description')) {
+            $slider->description = $request->description;
+        }
+
+        $slider->save();
+        return response()->json(['success' => 'true']);
+    }
+
+    public function EditFeatures(Request $request, $id)
+    {
+        $title = Title::findorFail($id);
+
+        if ($request->has('features')) {
+            $title->features = $request->features;
+        }
+
+        $title->save();
+        return response()->json(['success' => 'true']);
     }
 }
-
