@@ -66,4 +66,15 @@ Route::middleware('auth')->group(function () {
         Route::post('/update/feature', 'UpdateFeature')->name('update.feature');
         Route::get('/delete/feature/{id}', 'DeleteFeature')->name('delete.feature');
     });
+
+    Route::controller(HomeController::class)->group(function () {
+        Route::get('/get/clarify', 'GetClarifies')->name('get.clarifies');
+            Route::post('/update/clarify', 'UpdateClarify')->name('update.clarify');
+
+    });
+
+    Route::controller(HomeController::class)->group(function () {
+        Route::get('/get/all', 'GetAll')->name('get.all');
+        Route::post('/update/get_all', 'UpdateGetAll')->name('update.get_all');
+    });
 });
