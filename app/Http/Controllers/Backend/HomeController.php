@@ -7,6 +7,8 @@ use App\Models\Clarify;
 use App\Models\Feature;
 use App\Models\GetAll;
 use App\Models\Usability;
+use App\Models\Faq;
+use App\Models\App;
 use App\Models\Connect;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManager;
@@ -28,10 +30,10 @@ class HomeController extends Controller
     public function StoreFeature(Request $request)
     {
         Feature::create([
-                'title' => $request->title,
-                'icon' => $request->icon,
-                'description' => $request->description,
-            ]);
+            'title' => $request->title,
+            'icon' => $request->icon,
+            'description' => $request->description,
+        ]);
 
         $notification = array(
             'message' => 'Feature Inserted Successfully',
@@ -48,14 +50,14 @@ class HomeController extends Controller
     }
 
     public function UpdateFeature(Request $request)
-    {   
+    {
         $feature_id = $request->id;
 
         Feature::find($feature_id)->update([
-                'title' => $request->title,
-                'icon' => $request->icon,
-                'description' => $request->description,
-            ]);
+            'title' => $request->title,
+            'icon' => $request->icon,
+            'description' => $request->description,
+        ]);
 
         $notification = array(
             'message' => 'Feature Updated Successfully',
@@ -306,5 +308,104 @@ class HomeController extends Controller
         $connect->update($request->only(['title', 'description']));
 
         return response()->json(['status' => 'success', 'message' => 'Updated successfully']);
+    }
+
+    public function AllFaq()
+    {
+        $faq = Faq::latest()->get();
+        return view('admin.backend.faq.all_faq', compact('faq'));
+    }
+
+    public function AddFaq()
+    {
+        return view('admin.backend.faq.add_faq');
+    }
+
+    public function StoreFaq(Request $request)
+    {
+        Faq::create([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+
+        $notification = array(
+            'message' => 'Faq Inserted Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.faq')->with($notification);
+    }
+
+    public function EditFaq($id)
+    {
+        $faq = Faq::find($id);
+        return view('admin.backend.faq.edit_faq', compact('faq'));
+    }
+
+    public function UpdateFaq(Request $request)
+    {
+        $faq_id = $request->id;
+
+        Faq::find($faq_id)->update([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+
+        $notification = array(
+            'message' => 'Faq Updated Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('all.faq')->with($notification);
+    }
+
+    public function DeleteFaq($id)
+    {
+        Faq::find($id)->delete();
+
+        $notification = array(
+            'message' => 'Faq Deleted Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    public function UpdateApps(Request $request, $id)
+    {
+        $apps = App::findOrFail($id);
+
+        $apps->update($request->only(['title', 'description']));
+
+        return response()->json(['status' => 'success', 'message' => 'Updated successfully']);
+    }
+
+    public function UpdateAppsImage(Request $request, $id)
+    {
+        $apps = App::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $manager = new ImageManager(new Driver());
+            $name_gen = hexdec(uniqid()) . '.' .
+                $image->getClientOriginalExtension();
+            $img = $manager->read($image->getRealPath());
+            $img->resize(306, 481)->save(public_path('upload/apps/' . $name_gen));
+            $save_url = 'upload/apps/' . $name_gen;
+
+            if (file_exists(public_path($apps->image))) {
+                @unlink(public_path($apps->image));
+            }
+
+            $apps->update(['image' => $save_url]);
+
+            return response()->json([
+                'success' => 'true',
+                'image_url' => asset($save_url),
+                'message' => 'Image updated successfully',
+            ]);
+        }
+
+        return response()->json(['success' => 'false', 'message' => 'Image Upload Failed'], 400);
     }
 }
