@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\HomeController;
 use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\TeamController;
+use App\Http\Controllers\Backend\AboutUsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontendController;
 use Illuminate\Support\Facades\Route;
@@ -120,7 +121,17 @@ Route::middleware('auth')->group(function () {
         Route::post('/update/team', 'UpdateTeam')->name('update.team');
         Route::get('/delete/team/{id}', 'DeleteTeam')->name('delete.team');
     });
+
+    Route::controller(AboutUsController::class)->group(function () {
+        Route::get('/all/core_value', 'AllCoreValue')->name('all.core.value');
+        Route::get('/add/core_value', 'AddCoreValue')->name('add.core.value');
+        Route::post('/store/core_value', 'StoreCoreValue')->name('store.core.value');
+        Route::get('/edit/core_value/{id}', 'EditCoreValue')->name('edit.core.value');
+        Route::post('/update/core_value', 'UpdateCoreValue')->name('update.core.value');
+        Route::get('/delete/core_value/{id}', 'DeleteCoreValue')->name('delete.core.value');
+    });
 });
 
 // Out of any middleware
 Route::get('/team', [FrontendController::class, 'OurTeam'])->name('our.team');
+Route::get('/about-us', [FrontendController::class, 'AboutUs'])->name('about.us');

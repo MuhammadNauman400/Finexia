@@ -10,4 +10,9 @@ class FrontendController extends Controller
     {
         return view('home.team.team_page');
     }
+
+    public function AboutUs()
+    {
+        return view('home.about.about_us');
+    }
 }

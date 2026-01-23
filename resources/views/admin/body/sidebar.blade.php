@@ -187,6 +187,25 @@
                     </div>
                 </li>
 
+                <li>
+                    <a href="#core-values" data-bs-toggle="collapse">
+                        <i data-feather="alert-octagon"></i>
+                        <span>Core Value Setup</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="core-values">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{route('all.core.value')}}" class="tp-link">All Core Values</a>
+                            </li>
+
+                            <li>
+                                <a href="{{route('add.core.value')}}" class="tp-link">Add Core Value</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
 
                 <li class="menu-title mt-2">General</li>
 
