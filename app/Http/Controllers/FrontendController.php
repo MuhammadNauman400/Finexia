@@ -15,4 +15,9 @@ class FrontendController extends Controller
     {
         return view('home.about.about_us');
     }
+
+    public function OurService()
+    {
+        return view('home.service.service');
+    }
 }

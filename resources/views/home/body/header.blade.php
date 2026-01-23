@@ -34,7 +34,7 @@
                             </li>
 
                             <li>
-                                <a href="contact-us.html">Our Service</a>
+                                <a href="{{ route('our.service') }}">Our Service</a>
                             </li>
 
                             <li>

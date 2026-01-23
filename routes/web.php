@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\TeamController;
 use App\Http\Controllers\Backend\AboutUsController;
+use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FrontendController;
 use Illuminate\Support\Facades\Route;
@@ -131,12 +132,23 @@ Route::middleware('auth')->group(function () {
         Route::get('/delete/core_value/{id}', 'DeleteCoreValue')->name('delete.core.value');
     });
 
-        Route::controller(AboutUsController::class)->group(function () {
-            Route::get('/get/aboutus', 'GetAboutUs')->name('get.aboutus');
-            Route::post('/update/about', 'UpdateAboutUs')->name('update.about');
+    Route::controller(AboutUsController::class)->group(function () {
+        Route::get('/get/aboutus', 'GetAboutUs')->name('get.aboutus');
+        Route::post('/update/about', 'UpdateAboutUs')->name('update.about');
     });
+
+    Route::controller(BlogController::class)->group(function () {
+        Route::get('/blog/category', 'BlogCategory')->name('all.blog.category');
+        Route::post('/store/blog/category', 'StoreBlogCategory')->name('store.blog.category');
+        Route::get('/edit/blog/category/{id}', 'EditBlogCategory');
+        Route::post('/update/blog/category', 'UpdateBlogCategory')->name('update.blog.category');
+        Route::get('/delete/blog/category{id}', 'DeleteBlogCategory')->name('delete.blog.category');
+       
+    });
+
 });
 
 // Out of any middleware
 Route::get('/team', [FrontendController::class, 'OurTeam'])->name('our.team');
 Route::get('/about-us', [FrontendController::class, 'AboutUs'])->name('about.us');
+Route::get('/service', [FrontendController::class, 'OurService'])->name('our.service');
