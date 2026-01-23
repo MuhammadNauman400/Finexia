@@ -130,6 +130,11 @@ Route::middleware('auth')->group(function () {
         Route::post('/update/core_value', 'UpdateCoreValue')->name('update.core.value');
         Route::get('/delete/core_value/{id}', 'DeleteCoreValue')->name('delete.core.value');
     });
+
+        Route::controller(AboutUsController::class)->group(function () {
+            Route::get('/get/aboutus', 'GetAboutUs')->name('get.aboutus');
+            Route::post('/update/about', 'UpdateAboutUs')->name('update.about');
+    });
 });
 
 // Out of any middleware

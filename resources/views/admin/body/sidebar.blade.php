@@ -188,6 +188,21 @@
                 </li>
 
                 <li>
+                    <a href="#about" data-bs-toggle="collapse">
+                        <i data-feather="alert-octagon"></i>
+                        <span>About Page Setup</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="about">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{route('get.aboutus')}}" class="tp-link">About Page</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
                     <a href="#core-values" data-bs-toggle="collapse">
                         <i data-feather="alert-octagon"></i>
                         <span>Core Value Setup</span>
@@ -205,6 +220,8 @@
                         </ul>
                     </div>
                 </li>
+
+                
 
 
                 <li class="menu-title mt-2">General</li>
