@@ -36,7 +36,7 @@
             <div class="mt-50">
               <div class="lonyo-contact-us-info-item ">
                 <div class="lonyo-contact-us-icon">
-                  <a href="mailto:name@email.com"><img src="assets/images/contact-us/email.svg" alt=""></a>
+                  <a href="mailto:name@email.com"><img src="{{ asset('frontend/assets/images/contact-us/email.svg') }}" alt=""></a>
                 </div>
                 <div class="lonyo-contact-us-content">
                   <a href="mailto:name@email.com">
@@ -47,7 +47,7 @@
               </div>
               <div class="lonyo-contact-us-info-item ">
                 <div class="lonyo-contact-us-icon">
-                  <a href="mailto:name@email.com"><img src="assets/images/contact-us/phone.svg" alt=""></a>
+                  <a href="mailto:name@email.com"><img src="{{ asset('frontend/assets/images/contact-us/phone.svg') }}" alt=""></a>
                 </div>
                 <div class="lonyo-contact-us-content">
                   <a href="mailto:name@email.com">
@@ -58,7 +58,7 @@
               </div>
               <div class="lonyo-contact-us-info-item pb-0">
                 <div class="lonyo-contact-us-icon">
-                  <a href="mailto:name@email.com"><img src="assets/images/contact-us/email.svg" alt=""></a>
+                  <a href="mailto:name@email.com"><img src="{{ asset('frontend/assets/images/contact-us/email.svg') }}" alt=""></a>
                 </div>
                 <div class="lonyo-contact-us-content">
                   <h4>Find Us:</h4>
