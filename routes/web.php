@@ -155,6 +155,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/delete/blog/post/{id}', 'DeleteBlogPost')->name('delete.blog.post');
     });
 
+    Route::controller(FrontendController::class)->group(function () {
+        Route::get('/contact/all/message', 'ContactAllMessage')->name('contact.all.message');
+        Route::get('/delete/message/{id}', 'DeleteMessage')->name('delete.message');
+    
+    });
+
 });
 
 // Out of any middleware
@@ -164,3 +170,5 @@ Route::get('/service', [FrontendController::class, 'OurService'])->name('our.ser
 Route::get('/blog', [FrontendController::class, 'BlogPage'])->name('blog.page');
 Route::get('/blog/details/{slug}', [FrontendController::class, 'BlogDetails']);
 Route::get('/blog/category/{id}', [FrontendController::class, 'BlogCategory']);
+Route::get('/contact', [FrontendController::class, 'ContactUs'])->name('contact.us');
+Route::post('/contact/message', [FrontendController::class, 'ContactMessage'])->name('contact.message');
