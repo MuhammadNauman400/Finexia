@@ -37,12 +37,12 @@
                                 <a href="{{ route('our.service') }}">Our Service</a>
                             </li>
 
-                            <li>
+                            {{-- <li>
                                 <a href="contact-us.html">Portfolio</a>
-                            </li>
+                            </li> --}}
 
                             <li>
-                                <a href="contact-us.html">Blog</a>
+                                <a href="{{ route('blog.page') }}">Blog</a>
                             </li>
 
                             <li>
