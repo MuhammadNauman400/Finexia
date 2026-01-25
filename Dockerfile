@@ -34,5 +34,6 @@ RUN npm run build
 EXPOSE 8000
 
 # Start Laravel (Railway handles env vars)
-CMD php artisan migrate --force && \
+CMD php artisan config:cache && \
+    php artisan route:cache && \
     php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
