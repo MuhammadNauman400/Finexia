@@ -37,5 +37,5 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Expose port 80
 EXPOSE 80
 
-# Start php-fpm (daemon) + nginx (foreground)
-CMD ["sh", "-c", "php-fpm -D && nginx -g 'daemon off;'"]
+# Start nginx + php-fpm (foreground)
+CMD ["sh", "-c", "nginx && php-fpm -F"]
