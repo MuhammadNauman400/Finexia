@@ -31,11 +31,11 @@ RUN npm run build
 # Permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Use correct nginx config location
+# Copy nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 80
 EXPOSE 80
 
-# Start nginx + php-fpm (foreground)
-CMD ["sh", "-c", "nginx && php-fpm -F"]
+# Start nginx + php-fpm in foreground
+CMD ["sh", "-c", "nginx -g 'daemon off;' & php-fpm -F"]
