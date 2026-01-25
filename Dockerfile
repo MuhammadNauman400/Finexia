@@ -1,39 +1,27 @@
-FROM php:8.2-cli
+FROM php:8.2-fpm
 
-# System dependencies
 RUN apt-get update && apt-get install -y \
     git curl unzip zip \
     libzip-dev libonig-dev libxml2-dev libsodium-dev \
     libpq-dev default-mysql-client default-libmysqlclient-dev \
     libfreetype6-dev libjpeg62-turbo-dev libpng-dev libsqlite3-dev \
+    nginx nodejs npm \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_mysql pdo_pgsql pdo_sqlite zip gd exif bcmath opcache sodium \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Node (NodeSource includes npm already)
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs
-
 WORKDIR /var/www/html
 
-# Copy app
 COPY . .
 
-# Install dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
-
-# Build assets
 RUN npm install
 RUN npm run build
 
-# Permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Expose port
-EXPOSE 8000
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Start server
-CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT}"]
+EXPOSE 80
+
+CMD ["sh", "-c", "nginx -g 'daemon off;' & php-fpm -F"]
