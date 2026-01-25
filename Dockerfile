@@ -1,6 +1,6 @@
 FROM php:8.2-fpm
 
-# System dependencies + nodejs
+# System dependencies + nodejs + nginx
 RUN apt-get update && apt-get install -y \
     git curl unzip zip \
     libzip-dev libonig-dev libxml2-dev libsodium-dev \
@@ -37,5 +37,5 @@ COPY nginx.conf /etc/nginx/sites-available/default
 # Expose port 80
 EXPOSE 80
 
-# Start both services
-CMD service nginx start && php-fpm
+# Start nginx + php-fpm properly
+CMD ["sh", "-c", "service nginx start && php-fpm"]
